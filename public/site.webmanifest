@@ -1,0 +1,99 @@
+{
+  "name": "Reze AI - Advanced AI Assistant",
+  "short_name": "Reze AI",
+  "description": "Your intelligent AI assistant from Team AX Inc. supporting multilingual conversations",
+  "start_url": "https://reze-ai.team-ax.top/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00ad7c",
+  "orientation": "portrait-primary",
+  "scope": "https://reze-ai.team-ax.top/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "ai"],
+  "icons": [
+    {
+      "src": "/favicon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Chat",
+      "short_name": "Chat",
+      "description": "Start a new conversation with Reze AI",
+      "url": "https://reze-ai.team-ax.top/?action=chat",
+      "icons": [
+        {
+          "src": "/favicon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Reze AI Desktop Interface"
+    },
+    {
+      "src": "/screenshot-mobile.jpg",
+      "sizes": "375x667",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Reze AI Mobile Interface"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

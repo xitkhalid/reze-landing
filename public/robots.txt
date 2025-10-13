@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://reze-ai.team-ax.top/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow specific paths if any
+# Disallow: /private/
+# Disallow: /admin/
+
+# Allow specific important paths
+Allow: /src/
+Allow: /public/
+Allow: /images/
+
+# Special rules for specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Host directive for Yandex
+Host: https://reze-ai.team-ax.top
