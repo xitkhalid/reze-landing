@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { ReactNode } from "react";
 import { Hind_Siliguri, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -111,7 +112,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
+  // Add site verification if available (e.g., google: 'your-verification-code'), otherwise omit
+  // verification: { google: 'your-google-site-verification' },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -135,17 +137,18 @@ export const metadata: Metadata = {
     'application-name': 'Reze AI',
     'mobile-web-app-capable': 'yes',
     'referrer': 'strict-origin-when-cross-origin',
+    // Moved non-standard fields here
+    category: 'technology',
+    classification: 'Artificial Intelligence',
+    distribution: 'global',
+    rating: 'general',
+    language: ['en', 'bn', 'hi', 'es', 'fr', 'de', 'zh', 'ja'],
+    geographicArea: ['Bangladesh', 'India', 'United States', 'United Kingdom', 'Canada', 'Australia'],
+    targetAudience: ['General Public', 'Students', 'Professionals', 'Businesses', 'Developers'],
   },
-  category: 'technology',
-  classification: 'Artificial Intelligence',
-  distribution: 'global',
-  rating: 'general',
-  language: ['en', 'bn', 'hi', 'es', 'fr', 'de', 'zh', 'ja'],
-  geographicArea: ['Bangladesh', 'India', 'United States', 'United Kingdom', 'Canada', 'Australia'],
-  targetAudience: ['General Public', 'Students', 'Professionals', 'Businesses', 'Developers'],
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -154,11 +157,7 @@ export const viewport = {
   colorScheme: 'light dark',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
