@@ -78,18 +78,18 @@ export const metadata: Metadata = {
     siteName: 'Reze AI',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/banner.jpg',
         width: 1200,
         height: 630,
         alt: 'Reze AI - Advanced AI Assistant',
         type: 'image/jpeg',
       },
       {
-        url: '/og-image-square.jpg',
+        url: '/reze-logo.png',
         width: 800,
         height: 800,
         alt: 'Reze AI Logo',
-        type: 'image/jpeg',
+        type: 'image/png',
       },
     ],
   },
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     description: 'Experience smart conversations and instant responses with Reze AI from Team AX Inc. Multilingual AI assistant supporting Bangla and English.',
     site: '@teamaxinc',
     creator: '@teamaxinc',
-    images: ['/twitter-image.jpg'],
+    images: ['/banner.jpg'],
   },
   robots: {
     index: true,
@@ -117,14 +117,13 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
-      { rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#d4a574' },
+      { rel: 'mask-icon', url: '/favicon.svg', color: '#d4a574' },
     ],
   },
   manifest: '/site.webmanifest',
@@ -187,7 +186,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "url": "https://team-ax.top",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://reze-ai.team-ax.top/logo.png"
+                "url": "https://reze-ai.team-ax.top/reze-logo.png"
               },
               "sameAs": [
                 "https://portfolio.team-ax.top",
