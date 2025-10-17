@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { ArrowLeft, Send, User, Bot, Loader2, MessageCircle, Copy, RefreshCw } from 'lucide-react'
+import { ArrowLeft, Send, Loader2, Copy, RefreshCw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -272,11 +272,11 @@ export default function ChatPage() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
+      // Only handle Enter for name dialog, not for sending messages
       if (showNameDialog) {
         handleNameSubmit(e)
-      } else {
-        sendMessage()
       }
+      // Removed sendMessage() call - only Send button should send messages
     }
   }
 
@@ -331,7 +331,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen bg-white dark:bg-gray-900">
       {/* Name Dialog */}
       <AnimatePresence>
         {showNameDialog && (
@@ -346,14 +346,14 @@ export default function ChatPage() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="bg-white rounded-2xl p-8 max-w-md w-full border border-gray-200 shadow-2xl"
+              className="bg-white rounded-2xl p-8 max-w-md w-full border border-gray-200 shadow-2xl dark:bg-gray-800 dark:border-gray-700"
             >
               <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <MessageCircle className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <img src="/reze-logo.png" alt="Reze AI" className="w-10 h-10 rounded" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Welcome to Reze AI</h3>
-                <p className="text-gray-600 text-sm">What should I call you?</p>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Welcome to Reze AI</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">What should I call you?</p>
               </div>
 
               <form onSubmit={handleNameSubmit} className="space-y-6">
@@ -367,7 +367,7 @@ export default function ChatPage() {
                     }}
                     onKeyPress={handleKeyPress}
                     placeholder="Enter your name"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-center"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-center dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:ring-blue-400"
                     autoFocus
                   />
                   {nameError && (
@@ -386,7 +386,7 @@ export default function ChatPage() {
                     <Button
                       type="button"
                       variant="outline"
-                      className="w-full px-4 py-3 rounded-lg border-gray-300 text-gray-700 hover:bg-gray-50 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border-gray-300 text-gray-700 hover:bg-gray-50 transition-all dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                     >
                       Cancel
                     </Button>
@@ -416,30 +416,32 @@ export default function ChatPage() {
       {!showNameDialog && (
         <>
           {/* Clean Header - Fixed Position */}
-          <header className="flex-shrink-0 bg-white border-b border-gray-200">
+          <header className="flex-shrink-0 bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800">
             <div className="max-w-4xl mx-auto px-4 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Link href="/">
-                    <Button variant="ghost" size="sm" className="hover:bg-gray-100 p-2">
-                      <ArrowLeft className="w-4 h-4 text-gray-600" />
+                    <Button variant="ghost" size="sm" className="hover:bg-gray-100 dark:hover:bg-gray-800 p-2">
+                      <ArrowLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                     </Button>
                   </Link>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                      <Bot className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                      <img src="/reze-logo.png" alt="Reze AI" className="w-6 h-6 rounded" />
                     </div>
                     <div>
-                      <h1 className="font-semibold text-gray-900">Reze AI</h1>
-                      <p className="text-xs text-gray-500">Advanced AI Assistant</p>
+                      <h1 className="font-semibold text-gray-900 dark:text-white">Reze AI</h1>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Advanced AI Assistant</p>
                     </div>
                   </div>
                 </div>
                 {userName && (
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600">{userName}</span>
-                    <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center">
-                      <User className="w-3 h-3 text-white" />
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{userName}</span>
+                    <div className="w-6 h-6 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-white text-xs font-bold">
+                        {userName.charAt(0).toUpperCase()}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -450,16 +452,16 @@ export default function ChatPage() {
           {/* Messages Area - Takes remaining space */}
           <div 
             ref={messagesContainerRef}
-            className="flex-1 overflow-y-auto bg-gray-50"
+            className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950"
           >
             <div className="max-w-4xl mx-auto">
               {messages.length === 0 ? (
                 <div className="text-center py-16 px-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                    <MessageCircle className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <img src="/reze-logo.png" alt="Reze AI" className="w-10 h-10 rounded" />
                   </div>
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-3">What can I help with?</h2>
-                  <p className="text-gray-600 mb-8">Ask anything, I'm here to assist you</p>
+                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">What can I help with?</h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-8">Ask anything, I'm here to assist you</p>
                   
                   {/* Quick Suggestions */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
@@ -467,7 +469,7 @@ export default function ChatPage() {
                       <button
                         key={index}
                         onClick={() => handleQuickSuggestion(suggestion)}
-                        className="p-4 bg-white border border-gray-200 rounded-lg text-left hover:bg-gray-50 hover:border-gray-300 transition-all text-sm text-gray-700 hover:text-gray-900"
+                        className="p-4 bg-white border border-gray-200 rounded-lg text-left hover:bg-gray-50 hover:border-gray-300 transition-all text-sm text-gray-700 hover:text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
                       >
                         {suggestion}
                       </button>
@@ -485,8 +487,8 @@ export default function ChatPage() {
                       className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       {message.role === 'assistant' && (
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Bot className="w-4 h-4 text-white" />
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100 dark:bg-gray-700">
+                          <img src="/reze-logo.png" alt="Reze AI" className="w-5 h-5 rounded" />
                         </div>
                       )}
                       
@@ -494,12 +496,12 @@ export default function ChatPage() {
                         <div className={`rounded-lg px-4 py-3 ${
                           message.role === 'user'
                             ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                            : 'bg-white border border-gray-200 text-gray-900'
+                            : 'bg-white border border-gray-200 text-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100'
                         }`}>
                           <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
                           <div className="flex items-center justify-between mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <p className={`text-xs ${
-                              message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
+                              message.role === 'user' ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'
                             }`}>
                               {new Date(message.timestamp).toLocaleTimeString()}
                             </p>
@@ -511,7 +513,7 @@ export default function ChatPage() {
                                 className={`h-6 w-6 p-0 hover:bg-gray-100 transition-colors ${
                                   message.role === 'user' 
                                     ? 'text-blue-100 hover:bg-blue-600 hover:text-white' 
-                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700'
                                 }`}
                                 title="Copy message"
                               >
@@ -528,7 +530,7 @@ export default function ChatPage() {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => regenerateResponse(index)}
-                                  className="h-6 w-6 p-0 hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
+                                  className="h-6 w-6 p-0 hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700"
                                   title="Regenerate response"
                                 >
                                   <RefreshCw className="w-3 h-3" />
@@ -540,8 +542,10 @@ export default function ChatPage() {
                       </div>
 
                       {message.role === 'user' && (
-                        <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <User className="w-4 h-4 text-white" />
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <span className="text-white text-sm font-bold">
+                            {userName ? userName.charAt(0).toUpperCase() : 'U'}
+                          </span>
                         </div>
                       )}
                     </motion.div>
@@ -554,16 +558,16 @@ export default function ChatPage() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex gap-3 justify-start"
                     >
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-4 h-4 text-white" />
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100 dark:bg-gray-700">
+                        <img src="/reze-logo.png" alt="Reze AI" className="w-5 h-5 rounded" />
                       </div>
-                      <div className="bg-white border border-gray-200 rounded-lg px-4 py-3">
+                      <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 dark:bg-gray-800 dark:border-gray-700">
                         <div className="flex items-center gap-2">
                           <div className="flex gap-1">
                             {[0, 1, 2].map((i) => (
                               <motion.div
                                 key={i}
-                                className="w-2 h-2 bg-gray-400 rounded-full"
+                                className="w-2 h-2 bg-gray-400 rounded-full dark:bg-gray-500"
                                 animate={{
                                   y: [0, -4, 0],
                                 }}
@@ -576,7 +580,7 @@ export default function ChatPage() {
                               />
                             ))}
                           </div>
-                          <span className="text-sm text-gray-500">Reze is thinking...</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">Reze is thinking...</span>
                         </div>
                       </div>
                     </motion.div>
@@ -589,7 +593,7 @@ export default function ChatPage() {
           </div>
 
           {/* Input Area - Fixed at bottom */}
-          <div className="flex-shrink-0 bg-white border-t border-gray-200">
+          <div className="flex-shrink-0 bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-800">
             <div className="max-w-4xl mx-auto p-4">
               <div className="relative flex items-end gap-2">
                 <textarea
@@ -598,7 +602,7 @@ export default function ChatPage() {
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Type a message..."
-                  className="flex-1 px-4 py-3 pr-12 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="flex-1 px-4 py-3 pr-12 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:ring-blue-400"
                   rows={1}
                   style={{ minHeight: '44px', maxHeight: '120px' }}
                   onInput={(e) => {
@@ -610,7 +614,7 @@ export default function ChatPage() {
                 <Button
                   onClick={sendMessage}
                   disabled={!inputMessage.trim() || isLoading}
-                  className="absolute right-2 bottom-2 w-8 h-8 p-0 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2 bottom-2 w-8 h-8 p-0 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   {isLoading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -622,7 +626,7 @@ export default function ChatPage() {
               
               {/* Footer */}
               <div className="mt-3 text-center">
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Reze can make mistakes, Please double-check responses
                 </p>
               </div>
