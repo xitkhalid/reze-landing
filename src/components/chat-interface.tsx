@@ -323,7 +323,7 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
                   </div>
                 </div>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsOpen?.(false)}
                   className="text-amber-600 hover:text-amber-800 transition-colors"
                 >
                   <X className="w-5 h-5" />
