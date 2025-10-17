@@ -42,6 +42,7 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
   const [inputMessage, setInputMessage] = useState('')
   const [nameError, setNameError] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const isOpen = externalShowChat !== undefined ? externalShowChat : isChatOpen
   const setIsOpen = externalShowChat !== undefined ? onChatClose : (open: boolean) => setChatOpen(open)
@@ -144,6 +145,12 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
 
     addMessage(userMessage)
     setInputMessage('')
+    
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+    }
+    
     setLoading(true)
 
     try {
@@ -188,14 +195,21 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
     setLoading(false)
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value
+    setInputMessage(newValue)
+    
+    // Auto-resize textarea
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`
+    }
+  }
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && showNameDialog) {
       e.preventDefault()
-      if (showNameDialog) {
-        handleNameSubmit(e)
-      } else {
-        sendMessage()
-      }
+      handleNameSubmit(e)
     }
   }
 
@@ -309,13 +323,7 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
                   </div>
                 </div>
                 <button
-                  onClick={() => {
-                    if (externalShowChat !== undefined) {
-                      onChatClose?.();
-                    } else {
-                      setChatOpen(false);
-                    }
-                  }}
+                  onClick={() => setIsOpen(false)}
                   className="text-amber-600 hover:text-amber-800 transition-colors"
                 >
                   <X className="w-5 h-5" />
@@ -377,14 +385,19 @@ export default function ChatInterface({ showChat: externalShowChat, onChatClose 
             {/* Input */}
             <div className="p-4 border-t border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 rounded-b-2xl">
               <div className="flex gap-2">
-                <input
-                  type="text"
+                <textarea
+                  ref={textareaRef}
                   value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
-                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200 bg-white/80 backdrop-blur-sm text-amber-900 placeholder-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-transparent"
+                  onChange={handleInputChange}
+                  placeholder="Type your message... (Press Enter for new line)"
+                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200 bg-white/80 backdrop-blur-sm text-amber-900 placeholder-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-transparent resize-none"
                   maxLength={2000}
+                  rows={1}
+                  style={{
+                    minHeight: '40px',
+                    maxHeight: '120px',
+                    overflowY: 'auto'
+                  }}
                 />
                 <button
                   onClick={sendMessage}
